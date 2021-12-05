@@ -15,10 +15,10 @@
             <div class="search col-3">
                 <form>
                 <label for="name">Search for a City:</label>
-                <input type="text" placeholder="City, State" id="search-form" class="rounded"/>
+                <input type="text" placeholder="City, State" onfocus="this.value=''" id="search-form" class="rounded"/>
                 <button type="submit" class="btn btn-primary" id="searchBtn">Search</button>
+                <div id="search-history"></div>
             </div>
-            <div id="search-history"></div>
             
             <div class="col-9">
                 <div class="row border border-dark rounded mt-3">

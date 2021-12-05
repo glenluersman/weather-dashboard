@@ -9,7 +9,7 @@ var currentWindSpeedEl = document.querySelector("#wind-speed");
 var currentUVEl = document.querySelector("#UV-index");
 var forecastEls = document.querySelectorAll("#forecast");
 var historyEl = document.querySelector("#search-history");
-
+var searchHistory = {};
 
 var getWeather = function(cityName) {
   var apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&units=imperial&appid=" + apiKey;  
@@ -45,11 +45,14 @@ var getWeather = function(cityName) {
     if (response.ok) {
       response.json().then(function(oneCall) {
         console.log(oneCall);
-        currentUVEl.innerHTML = "UV Index: " + oneCall.current.uvi;
-        if (oneCall.current.uvi > 6) {
+        var UVindex = oneCall.current.uvi;
+        currentUVEl.innerHTML = "UV Index: " + UVindex;
+        if (UVindex > 8) {
           currentUVEl.setAttribute("class", "badge bg-danger");
-        } else {
+        } else if (UVindex < 4) {
           currentUVEl.setAttribute("class", "badge bg-success");
+        } else {
+          currentUVEl.setAttribute("class", "badge bg-warning");
         }
         
         
@@ -83,19 +86,33 @@ var getWeather = function(cityName) {
   
 };
 
-searchBtnEl.addEventListener("submit", function(event) {
+searchBtnEl.addEventListener("click", function(event) {
   event.preventDefault();
   var searchTerm = searchFormEl.value;
+  console.log(searchTerm);
+  setLocalStorage(searchTerm);
   getWeather(searchTerm);
-  searchHistory.push(searchTerm);
-  localStorage.setItem("search", JSON.stringify(searchHistory));
-  displaySearchHistory();
+  displaySearchHistory(searchTerm);
 });
 
-var displaySearchHistory = function() {
-  for (i =  0; i < searchHistory.length; i++) {
-    var historyBtn = document.createElement("button");
-    btn.innerHTML = searchTerm
-    historyEl.appendChild(btn);
+var setLocalStorage = function(searchTerm) {
+  localStorage.setItem("city", JSON.stringify(searchTerm));
+  
+  searchHistory = JSON.parse(localStorage.getItem("city"));
+
+  if (!searchHistory) {
+    searchHistory = [];
   }
-}
+};
+
+var displaySearchHistory = function(searchTerm) {
+  var historyBtn = document.createElement("button");
+  historyBtn.innerHTML = searchTerm;
+  historyBtn.setAttribute("class", "btn btn-primary history-btn");
+  historyEl.appendChild(historyBtn);
+  historyBtn.addEventListener("click", function(event) {
+    event.preventDefault();
+    console.log(event.target);
+    getWeather(searchTerm);
+  });
+};

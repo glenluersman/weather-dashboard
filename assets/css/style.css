@@ -30,3 +30,13 @@
 .line {
   border-bottom: 3px;
 }
+
+.history-btn {
+  margin: 3px 0;
+  width: 100%;
+}
+
+#search-history {
+  border-top: 3px solid black;
+  margin-top: 3px;
+}
