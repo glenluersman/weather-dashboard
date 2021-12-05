@@ -8,10 +8,11 @@ var currentHumidityEl = document.querySelector("#humidity");
 var currentWindSpeedEl = document.querySelector("#wind-speed");
 var currentUVEl = document.querySelector("#UV-index");
 var forecastEls = document.querySelectorAll("#forecast");
+var historyEl = document.querySelector("#search-history");
 
 
-var getWeather = function() {
-  var apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=troy,ohio&units=imperial&appid=" + apiKey;  
+var getWeather = function(cityName) {
+  var apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&units=imperial&appid=" + apiKey;  
   fetch(apiUrl).then(function(response) {
     if (response.ok) {
       response.json().then(function(data) {
@@ -82,5 +83,18 @@ var getWeather = function() {
   
 };
 
-//searchBtnEl.addEventListener("submit", getWeather);
-getWeather()
+searchBtnEl.addEventListener("submit", function() {
+  var searchTerm = searchFormEl.value;
+  getWeather(searchTerm);
+  searchHistory.push(searchTerm);
+  localStorage.setItem("search", JSON.stringify(searchHistory));
+  displaySearchHistory();
+});
+
+var displaySearchHistory = function() {
+  for (i =  0; i < searchHistory.length; i++) {
+    var historyBtn = document.createElement("button");
+    btn.innerHTML = searchTerm
+    historyEl.appendChild(btn);
+  }
+}
