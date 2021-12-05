@@ -1,0 +1,15 @@
+.dashboard {
+  height: 75px;
+  font-size: 45px;
+  font-weight: bolder;
+}
+
+.search {
+  /*border-bottom: 3px solid black;*/
+  padding: 3px;
+}
+
+.current {
+  border: 3px solid black;
+  padding: 3px;
+}
