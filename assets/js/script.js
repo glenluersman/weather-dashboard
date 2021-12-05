@@ -83,7 +83,8 @@ var getWeather = function(cityName) {
   
 };
 
-searchBtnEl.addEventListener("submit", function() {
+searchBtnEl.addEventListener("submit", function(event) {
+  event.preventDefault();
   var searchTerm = searchFormEl.value;
   getWeather(searchTerm);
   searchHistory.push(searchTerm);
