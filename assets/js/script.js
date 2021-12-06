@@ -9,7 +9,7 @@ var currentWindSpeedEl = document.querySelector("#wind-speed");
 var currentUVEl = document.querySelector("#UV-index");
 var forecastEls = document.querySelectorAll("#forecast");
 var historyEl = document.querySelector("#search-history");
-var searchHistory = {};
+var searchHistory = [];
 
 var getWeather = function(cityName) {
   var apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&units=imperial&appid=" + apiKey;  
@@ -71,7 +71,7 @@ var getWeather = function(cityName) {
           forecastIconEl.setAttribute("alt", oneCall.daily[i].weather[0].description);
           forecastEls[i].appendChild(forecastIconEl);
           var forecastTempEl = document.createElement("p");
-          forecastTempEl.innerHTML = "Temp: " + oneCall.daily[i].temp.day + "\u2109";
+          forecastTempEl.innerHTML = "Temp: " + oneCall.daily[i].temp.max + "\u2109";
           forecastEls[i].appendChild(forecastTempEl);
           forecastHumidityEl = document.createElement("p");
           forecastHumidityEl.innerHTML = "Humidity: " + oneCall.daily[i].humidity + " %";
